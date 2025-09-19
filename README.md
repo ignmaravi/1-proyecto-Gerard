@@ -1,3 +1,3 @@
-Readme
+#Proyecto Gerard
 
-Hola prueba 
+Hola

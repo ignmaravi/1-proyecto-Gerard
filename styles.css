@@ -1,6 +1,6 @@
 .notesContainer {
-    display: flex; /* Esto alinea el input y el botón en la misma fila */
-    gap: 10px; /* Espacio entre los elementos */
+    display: flex; 
+    gap: 10px; 
     margin-bottom: 20px;
 }
 

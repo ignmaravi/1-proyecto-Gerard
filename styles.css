@@ -1,3 +1,6 @@
+body {
+    font-family: Arial, sans-serif;
+}
 .notesContainer {
     display: flex; 
     gap: 10px; 

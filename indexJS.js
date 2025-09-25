@@ -1,18 +1,25 @@
-// Espera a que el DOM esté cargado
 document.addEventListener("DOMContentLoaded", function () {
     const addNoteBtn = document.getElementById("addNoteBtn");
     const noteInput = document.getElementById("noteInput");
     const tablero = document.getElementById("tablero");
 
-    addNoteBtn.addEventListener("click", function () {
+    function agregarNota() {
         const notaTexto = noteInput.value.trim();
 
         if (notaTexto !== "") {
             const nuevaNota = document.createElement("div");
             nuevaNota.textContent = notaTexto;
-            nuevaNota.classList.add("nota"); // Para estilos si deseas
+            nuevaNota.classList.add("nota");
             tablero.appendChild(nuevaNota);
-            noteInput.value = ""; // Limpia el input
+            noteInput.value = "";
+        }
+    }
+
+    addNoteBtn.addEventListener("click", agregarNota);
+
+    noteInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            agregarNota();
         }
     });
 });

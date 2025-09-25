@@ -3,15 +3,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const noteInput = document.getElementById("noteInput");
     const tablero = document.getElementById("tablero");
 
+    function mostrarNota(texto) {
+        const nuevaNota = document.createElement("div");
+        nuevaNota.textContent = texto;
+        nuevaNota.classList.add("nota");
+        tablero.appendChild(nuevaNota);
+    }
+
+    function cargarNotas() {
+        const notasGuardadas = localStorage.getItem("notas");
+        if (notasGuardadas) {
+            const notasArray = JSON.parse(notasGuardadas);
+            notasArray.forEach(mostrarNota);
+        }
+    }
+
+    function guardarNotas() {
+        const notas = [];
+        tablero.querySelectorAll(".nota").forEach(notaDiv => {
+            notas.push(notaDiv.textContent);
+        });
+        localStorage.setItem("notas", JSON.stringify(notas));
+    }
+
     function agregarNota() {
         const notaTexto = noteInput.value.trim();
 
         if (notaTexto !== "") {
-            const nuevaNota = document.createElement("div");
-            nuevaNota.textContent = notaTexto;
-            nuevaNota.classList.add("nota");
-            tablero.appendChild(nuevaNota);
+            mostrarNota(notaTexto);
             noteInput.value = "";
+            guardarNotas();
         }
     }
 
@@ -22,4 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
             agregarNota();
         }
     });
+
+    cargarNotas();
 });

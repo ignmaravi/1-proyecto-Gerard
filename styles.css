@@ -23,3 +23,26 @@ body {
   font-size: 100%;
   background-color: #f6fa0b;
 }
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2em;
+
+}
+
+.tablero div {
+  background-color: yellow;
+  padding: 1em;
+  box-shadow: 2px 2px 4px gray;
+}
+
+.tablero div:nth-child(3n +1) {
+  background-color: green;
+  transform: rotate(2deg);
+}
+
+.tablero div:nth-child(3n +2) {
+  background-color: pink;
+  transform: rotate(-2deg);
+}

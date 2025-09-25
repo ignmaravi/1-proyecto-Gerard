@@ -1,48 +1,37 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const addNoteBtn = document.getElementById("addNoteBtn");
     const noteInput = document.getElementById("noteInput");
     const tablero = document.getElementById("tablero");
 
-    function mostrarNota(texto) {
-        const nuevaNota = document.createElement("div");
-        nuevaNota.textContent = texto;
-        nuevaNota.classList.add("nota");
-        tablero.appendChild(nuevaNota);
-    }
-
-    function cargarNotas() {
-        const notasGuardadas = localStorage.getItem("notas");
-        if (notasGuardadas) {
-            const notasArray = JSON.parse(notasGuardadas);
-            notasArray.forEach(mostrarNota);
-        }
-    }
+    // Cargar notas desde localStorage
+    const notas = JSON.parse(localStorage.getItem("notas") || "[]");
+    notas.forEach(texto => {
+        const nota = document.createElement("div");
+        nota.textContent = texto;
+        nota.classList.add("nota");
+        tablero.appendChild(nota);
+    });
 
     function guardarNotas() {
-        const notas = [];
-        tablero.querySelectorAll(".nota").forEach(notaDiv => {
-            notas.push(notaDiv.textContent);
-        });
-        localStorage.setItem("notas", JSON.stringify(notas));
+        const textos = Array.from(tablero.children).map(div => div.textContent);
+        localStorage.setItem("notas", JSON.stringify(textos));
     }
 
     function agregarNota() {
-        const notaTexto = noteInput.value.trim();
+        const texto = noteInput.value.trim();
+        if (!texto) return;
 
-        if (notaTexto !== "") {
-            mostrarNota(notaTexto);
-            noteInput.value = "";
-            guardarNotas();
-        }
+        const nota = document.createElement("div");
+        nota.textContent = texto;
+        nota.classList.add("nota");
+        tablero.appendChild(nota);
+
+        noteInput.value = "";
+        guardarNotas();
     }
 
     addNoteBtn.addEventListener("click", agregarNota);
-
-    noteInput.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            agregarNota();
-        }
+    noteInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") agregarNota();
     });
-
-    cargarNotas();
 });

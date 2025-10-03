@@ -5,10 +5,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function mostrarNota(texto) {
         const nuevaNota = document.createElement("div");
-        nuevaNota.textContent = texto;
         nuevaNota.classList.add("nota");
+
+        
+        const spanTexto = document.createElement("span");
+        spanTexto.textContent = texto;
+
+        
+        const btnBorrar = document.createElement("button");
+        btnBorrar.textContent = "X";
+        btnBorrar.classList.add("btn-borrar");
+
+        
+
+        const btnEditar = document.createElement("button");
+            btnEditar.textContent = "E";
+            btnEditar.classList.add("btn-editar");
+            btnEditar.addEventListener("click", function () {
+                modificarNota(spanTexto);
+        });
+
+        btnBorrar.addEventListener("click", function () {
+            borrarNota(nuevaNota);
+        });
+
+        nuevaNota.appendChild(spanTexto);
+        nuevaNota.appendChild(btnBorrar);
+        nuevaNota.appendChild(btnEditar);
         tablero.appendChild(nuevaNota);
+        
     }
+
+
 
     function cargarNotas() {
         const notasGuardadas = localStorage.getItem("notas");
@@ -26,6 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("notas", JSON.stringify(notas));
     }
 
+    function modificarNota(spanTexto) {
+        const nuevoTexto = prompt("Edita tu nota:", spanTexto.textContent);
+        if (nuevoTexto !== null && nuevoTexto.trim() !== "") {
+            spanTexto.textContent = nuevoTexto.trim();
+            guardarNotas(); 
+    }
+}
+
     function agregarNota() {
         const notaTexto = noteInput.value.trim();
 
@@ -35,6 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
             guardarNotas();
         }
     }
+
+    function borrarNota(notaDiv) {
+        notaDiv.remove();      
+        guardarNotas();        
+    }   
+
 
     addNoteBtn.addEventListener("click", agregarNota);
 

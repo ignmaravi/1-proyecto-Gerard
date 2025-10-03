@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const noteInput = document.getElementById("noteInput");
     const tablero = document.getElementById("tablero");
 
-    // Cargar notas desde localStorage
     const notas = JSON.parse(localStorage.getItem("notas") || "[]");
     notas.forEach(texto => {
         const nota = document.createElement("div");
